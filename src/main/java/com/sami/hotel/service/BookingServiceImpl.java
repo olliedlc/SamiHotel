@@ -39,7 +39,8 @@ public class BookingServiceImpl implements BookingService{
         return bookingRepository.getAllActiveBooking();
     }
 
-    @HystrixCommand(fallbackMethod = "getAllRoomsFallback")
+    @HystrixCommand(fallbackMethod = "getAllRoomsFallback",
+            ignoreExceptions = { RuntimeException.class})
     @Override
     public List<Room> getAllRooms() {
         List<Room> roomList = new ArrayList<>();
@@ -56,7 +57,8 @@ public class BookingServiceImpl implements BookingService{
         return roomList;
     }
 
-    @HystrixCommand(fallbackMethod = "findBookingByUserIdFallback")
+    @HystrixCommand(fallbackMethod = "findBookingByUserIdFallback",
+            ignoreExceptions = { RuntimeException.class})
     @Override
     public List<Booking> findBookingByUserId(Long userId) {
         List<Booking> bookingList = new ArrayList<>();
@@ -77,7 +79,8 @@ public class BookingServiceImpl implements BookingService{
         return bookingList;
     }
 
-    @HystrixCommand(fallbackMethod = "bookRoomFallback")
+    @HystrixCommand(fallbackMethod = "bookRoomFallback",
+            ignoreExceptions = { RuntimeException.class})
     @Override
     public void bookRoom(@NotNull Booking booking) {
         Room room = roomRepository.findById(booking.getRoomId()).get();
@@ -95,7 +98,8 @@ public class BookingServiceImpl implements BookingService{
         bookingRepository.save(booking);
     }
 
-    @HystrixCommand(fallbackMethod = "cancelBookingFallback")
+    @HystrixCommand(fallbackMethod = "cancelBookingFallback",
+            ignoreExceptions = { RuntimeException.class})
     @Override
     public void cancelBooking(
             Long bookingId) {
@@ -115,7 +119,8 @@ public class BookingServiceImpl implements BookingService{
         bookingRepository.save(booking);
     }
 
-    @HystrixCommand(fallbackMethod = "updateBookingStatusFallback")
+    @HystrixCommand(fallbackMethod = "updateBookingStatusFallback",
+            ignoreExceptions = { RuntimeException.class})
     @Override
     public void updateBookingStatus(Long bookingId,
             Long bookingStatusId) {
@@ -129,7 +134,8 @@ public class BookingServiceImpl implements BookingService{
         bookingRepository.save(booking);
     }
 
-    @HystrixCommand(fallbackMethod = "updateBookingDateFallback")
+    @HystrixCommand(fallbackMethod = "updateBookingDateFallback",
+            ignoreExceptions = { RuntimeException.class})
     @Override
     public void updateBookingDate(
             Long bookingId,
@@ -146,7 +152,8 @@ public class BookingServiceImpl implements BookingService{
         bookingRepository.save(booking);
     }
 
-    @HystrixCommand(fallbackMethod = "getRoomBookedDatesFallback")
+    @HystrixCommand(fallbackMethod = "getRoomBookedDatesFallback",
+            ignoreExceptions = { RuntimeException.class})
     @Override
     public List<String> getRoomBookedDates(Long roomId) {
         return bookingRepository.getRoomBookedDates(roomId);
